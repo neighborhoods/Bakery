@@ -23,7 +23,7 @@
   ],
   "config": {
     "sort-packages": true
-  },r
+  },
   "require": {
     "php": "^7.2",
     "symfony/dependency-injection": "^4.1"
