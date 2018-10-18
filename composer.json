@@ -1,0 +1,39 @@
+{
+  "name": "neighborhoods/bakery",
+  "description": "Leverages the PHP 7+ Opcache extension to compile source code and save the binary representation to disk.",
+  "type": "library",
+  "license": "proprietary",
+  "keywords": [
+    "bakery"
+  ],
+  "bin": [
+    "bin/bakery"
+  ],
+  "authors": [
+    {
+      "name": "Brad Wilson",
+      "email": "brad.wilson@neighborhoods.com"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://satis.neighborhoods.com"
+    }
+  ],
+  "config": {
+    "sort-packages": true
+  },r
+  "require": {
+    "php": "^7.2",
+    "symfony/dependency-injection": "^4.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Neighborhoods\\Bakery\\": [
+        "src",
+        "fab"
+      ]
+    }
+  }
+}
