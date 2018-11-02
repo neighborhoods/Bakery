@@ -107,7 +107,7 @@ class Baker implements BakerInterface
     protected function getRealPaths(array $potentialRealPaths): array
     {
         $realPaths = [];
-        foreach ($this->getRealPathGenerator()($potentialRealPaths) as $potentialRealPath) {
+        foreach ($this->getRealPathClosure()($potentialRealPaths) as $potentialRealPath) {
             if ($potentialRealPath !== false) {
                 $realPaths[] = $potentialRealPath;
             }
@@ -116,7 +116,7 @@ class Baker implements BakerInterface
         return $realPaths;
     }
 
-    protected function getRealPathGenerator() : \Closure
+    protected function getRealPathClosure() : \Closure
     {
         return function (array $potentialRealPaths) {
             foreach ($potentialRealPaths as $potentialRealPath) {
