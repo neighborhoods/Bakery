@@ -79,7 +79,7 @@ class Baker implements BakerInterface
     protected function purgeOpcacheDNSFileCache(): BakerInterface
     {
         $recursiveDirectoryIterator = new \RecursiveDirectoryIterator(
-            __DIR__ . '/../data/cache/Opcache/DNS',
+            __DIR__ . '/../../../../data/cache/Opcache/DNS',
             \RecursiveDirectoryIterator::SKIP_DOTS
         );
 
@@ -98,7 +98,7 @@ class Baker implements BakerInterface
 
     protected function getDIYamlIntermediaryFilePaths(): array
     {
-        $potentialRealPaths[] = __DIR__ . '/../data/cache/expressive.yml';
+        $potentialRealPaths[] = __DIR__ . '/../../../../data/cache/expressive.yml';
         $realPaths = $this->getRealPaths($potentialRealPaths);
 
         return $realPaths;
@@ -116,7 +116,7 @@ class Baker implements BakerInterface
         return $realPaths;
     }
 
-    protected function getRealPathGenerator(): \Generator
+    protected function getRealPathGenerator()
     {
         return function (array $potentialRealPaths) {
             foreach ($potentialRealPaths as $potentialRealPath) {
@@ -161,7 +161,7 @@ class Baker implements BakerInterface
 
     protected function getComposerClassmap(): array
     {
-        return require __DIR__ . '/../vendor/composer/autoload_classmap.php';
+        return require __DIR__ . '/../../../../vendor/composer/autoload_classmap.php';
     }
 
     protected function rm(string $fullFilePath): BakerInterface
