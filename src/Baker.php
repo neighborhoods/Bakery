@@ -116,7 +116,7 @@ class Baker implements BakerInterface
         return $realPaths;
     }
 
-    protected function getRealPathGenerator()
+    protected function getRealPathGenerator() : \Closure
     {
         return function (array $potentialRealPaths) {
             foreach ($potentialRealPaths as $potentialRealPath) {
