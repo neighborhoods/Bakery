@@ -57,7 +57,7 @@ class Baker implements BakerInterface
         $this->opcacheCompileFiles($this->getContainerCacheFiles());
         $this->log('>> Success.');
 
-        $this->log('>> Your Protean product has been successfully baked.');
+        $this->log('>> Your Protean product has been successfully baked.🤘🤘');
 
         return $this;
     }
