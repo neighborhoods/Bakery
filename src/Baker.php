@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Bakery;
 
+use Zend\HttpHandlerRunner\Exception\EmitterException;
+
 class Baker implements BakerInterface
 {
     public function bake(): BakerInterface
@@ -45,8 +47,8 @@ class Baker implements BakerInterface
 
     protected function opcacheCompile(): BakerInterface
     {
-        $this->log(">> Asking Opcache to compile the Composer classmap...");
-        $this->opcacheCompileFiles($this->getComposerClassmap());
+        $this->log(">> Asking Opcache to compile the Composer authoritative classmap...");
+        $this->opcacheCompileFiles($this->getComposerAuthoritativeClassmap());
         $this->log('>> Success.');
 
         $this->compileDIContainer();
@@ -66,6 +68,8 @@ class Baker implements BakerInterface
         ob_start();
         try {
             include $this->getIndexFile();
+        } catch (EmitterException $emitterException) {
+            $this->log('>> Intentionally ignoring EmitterException.');
         } catch (\Throwable $throwable) {
             ob_clean();
             throw $throwable;
@@ -116,7 +120,7 @@ class Baker implements BakerInterface
         return $realPaths;
     }
 
-    protected function getRealPathClosure() : \Closure
+    protected function getRealPathClosure(): \Closure
     {
         return function (array $potentialRealPaths) {
             foreach ($potentialRealPaths as $potentialRealPath) {
@@ -139,18 +143,14 @@ class Baker implements BakerInterface
 
     protected function getIndexFile(): string
     {
-        return __DIR__ . '/../public/index.php';
+        return __DIR__ . '/../../../../public/index.php';
     }
 
     protected function opcacheCompileFiles(array $fullFilePaths): BakerInterface
     {
         foreach ($fullFilePaths as $key => $fullFilePath) {
             if (!opcache_is_script_cached($fullFilePath)) {
-                if (opcache_compile_file($fullFilePath)) {
-                    $this->log(sprintf('Opcache has successfully compiled the file: %s', $fullFilePath));
-                } else {
-                    throw new \LogicException(sprintf("Opcache could not compile the file: %s", $fullFilePath));
-                }
+                $this->opcacheCompileFile($fullFilePath);
             } else {
                 $this->log(sprintf('Opcache has already cached the file: %s', $fullFilePath));
             }
@@ -159,9 +159,29 @@ class Baker implements BakerInterface
         return $this;
     }
 
-    protected function getComposerClassmap(): array
+    protected function opcacheCompileFile(string $fullFilePath): BakerInterface
     {
-        return require __DIR__ . '/../../../../vendor/composer/autoload_classmap.php';
+        try {
+            if (opcache_compile_file($fullFilePath)) {
+                $this->log(sprintf('Opcache has successfully compiled the file: %s', $fullFilePath));
+            } else {
+                throw new \LogicException(sprintf("Opcache could not compile the file: %s", $fullFilePath));
+            }
+        } catch (\ErrorException $errorException) {
+            $this->log(sprintf('Opcache could not compile the file: %s', $fullFilePath));
+        }
+
+        return $this;
+    }
+
+    protected function getComposerAuthoritativeClassmap(): array
+    {
+        $composerAuthoritativeClassMap = require __DIR__ . '/../../../../vendor/composer/autoload_classmap.php';
+        if (empty($composerAuthoritativeClassMap)) {
+            throw new \RuntimeException('Composer authoritative classmap is empty.');
+        }
+
+        return $composerAuthoritativeClassMap;
     }
 
     protected function rm(string $fullFilePath): BakerInterface
