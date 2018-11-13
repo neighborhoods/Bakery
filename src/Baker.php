@@ -132,8 +132,8 @@ class Baker implements BakerInterface
     protected function getContainerCacheFiles(): array
     {
         $cachedContainerFilePotentialRealPaths = [
-            __DIR__ . '/../data/cache/config-cache.php',
-            __DIR__ . '/../data/cache/container.php',
+            __DIR__ . '/../../../../data/cache/config-cache.php',
+            __DIR__ . '/../../../../data/cache/container.php',
         ];
 
         $cachedContainerFileRealPaths = $this->getRealPaths($cachedContainerFilePotentialRealPaths);
