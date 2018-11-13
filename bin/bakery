@@ -2,9 +2,21 @@
 <?php
 declare(strict_types=1);
 error_reporting(E_ALL);
+set_error_handler(function (
+    int $errorNumber,
+    string $errorString,
+    string $errorFile,
+    int $errorLine,
+    array $errorContext
+) {
+    throw new \ErrorException($errorString, $errorNumber, $errorNumber, $errorFile, $errorLine);
+});
+
+require_once __DIR__ . '/../../../../vendor/autoload.php';
 
 use Neighborhoods\Bakery\Baker;
 
-require_once __DIR__ . '/../../../../vendor/autoload.php';
 $baker = new Baker();
 $baker->bake();
+
+exit(0);
