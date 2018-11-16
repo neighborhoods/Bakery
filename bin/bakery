@@ -1,7 +1,13 @@
 #!/usr/bin/env php
 <?php
 declare(strict_types=1);
-opcache_reset();
+opcache_invalidate(realpath(__DIR__ . '/../../../../vendor/composer/autoload_classmap.php'));
+opcache_invalidate(realpath(__DIR__ . '/../../../../vendor/composer/autoload_files.php'));
+opcache_invalidate(realpath(__DIR__ . '/../../../../vendor/composer/autoload_namespaces.php'));
+opcache_invalidate(realpath(__DIR__ . '/../../../../vendor/composer/autoload_psr4.php'));
+opcache_invalidate(realpath(__DIR__ . '/../../../../vendor/composer/autoload_static.php'));
+opcache_invalidate(realpath(__DIR__ . '/../../../../vendor/composer/ClassLoader.php'));
+opcache_invalidate(realpath(__DIR__ . '/../../../../vendor/autoload.php'));
 error_reporting(E_ALL);
 set_error_handler(function (
     int $errorNumber,
