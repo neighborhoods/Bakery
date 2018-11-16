@@ -1,6 +1,7 @@
 #!/usr/bin/env php
 <?php
 declare(strict_types=1);
+opcache_reset();
 error_reporting(E_ALL);
 set_error_handler(function (
     int $errorNumber,
