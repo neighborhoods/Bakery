@@ -15,12 +15,6 @@
       "email": "brad.wilson@neighborhoods.com"
     }
   ],
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://satis.neighborhoods.com"
-    }
-  ],
   "config": {
     "sort-packages": true
   },

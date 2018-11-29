@@ -143,7 +143,7 @@ class Baker implements BakerInterface
 
     protected function getIndexFile(): string
     {
-        return __DIR__ . '/../../../../public/index.php';
+        return realpath(__DIR__ . '/../../../../public/index.php');
     }
 
     protected function opcacheCompileFiles(array $fullFilePaths): BakerInterface
