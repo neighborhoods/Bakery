@@ -2,7 +2,7 @@
   "name": "neighborhoods/bakery",
   "description": "Leverages the PHP 7+ Opcache extension to compile source code and save the binary representation to disk.",
   "type": "library",
-  "license": "proprietary",
+  "license": "mit",
   "keywords": [
     "bakery"
   ],
@@ -23,7 +23,7 @@
     "sort-packages": true
   },
   "require": {
-    "php": "^7.2",
+    "php": "^7.0",
     "symfony/dependency-injection": "^4.1"
   },
   "autoload": {
