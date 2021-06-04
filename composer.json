@@ -23,8 +23,7 @@
     "sort-packages": true
   },
   "require": {
-    "php": "^7|^8",
-    "symfony/dependency-injection": "^4.1"
+    "php": "^7|^8"
   },
   "autoload": {
     "psr-4": {
