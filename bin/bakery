@@ -9,12 +9,12 @@ opcache_invalidate(realpath(__DIR__ . '/../../../../vendor/composer/autoload_sta
 opcache_invalidate(realpath(__DIR__ . '/../../../../vendor/composer/ClassLoader.php'));
 opcache_invalidate(realpath(__DIR__ . '/../../../../vendor/autoload.php'));
 error_reporting(E_ALL);
-set_error_handler(function (
+set_error_handler(static function (
     int $errorNumber,
     string $errorString,
     string $errorFile,
     int $errorLine,
-    array $errorContext
+    array $errorContext = []
 ) {
     throw new \ErrorException($errorString, $errorNumber, $errorNumber, $errorFile, $errorLine);
 });
