@@ -1,13 +1,22 @@
 #!/usr/bin/env php
 <?php
 declare(strict_types=1);
-opcache_invalidate(realpath(__DIR__ . '/../../../../vendor/composer/autoload_classmap.php'));
-opcache_invalidate(realpath(__DIR__ . '/../../../../vendor/composer/autoload_files.php'));
-opcache_invalidate(realpath(__DIR__ . '/../../../../vendor/composer/autoload_namespaces.php'));
-opcache_invalidate(realpath(__DIR__ . '/../../../../vendor/composer/autoload_psr4.php'));
-opcache_invalidate(realpath(__DIR__ . '/../../../../vendor/composer/autoload_static.php'));
-opcache_invalidate(realpath(__DIR__ . '/../../../../vendor/composer/ClassLoader.php'));
-opcache_invalidate(realpath(__DIR__ . '/../../../../vendor/autoload.php'));
+
+$candidateInvalidationVendorFiles = [
+    'composer/autoload_classmap.php',
+    'composer/autoload_files.php',
+    'composer/autoload_namespaces.php',
+    'composer/autoload_psr4.php',
+    'composer/autoload_static.php',
+    'composer/ClassLoader.php',
+    'autoload.php',
+];
+foreach ($candidateInvalidationVendorFiles as $vendorFile) {
+    $realPath = realpath(__DIR__ . '/../../../../vendor/' . $vendorFile);
+    if ($realPath !== false) {
+        opcache_invalidate($realPath);
+    }
+}
 error_reporting(E_ALL);
 set_error_handler(static function (
     int $errorNumber,
