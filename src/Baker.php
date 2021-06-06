@@ -33,6 +33,9 @@ class Baker implements BakerInterface
 
     protected function opcacheCompile() : BakerInterface
     {
+        $this->log(">> Building Composer authoritative classmap...");
+        exec('composer dump-autoload -a');
+        $this->log('>> Success.');
         $this->log(">> Asking Opcache to compile the Composer authoritative classmap...");
         $this->opcacheCompileFiles($this->getComposerAuthoritativeClassmap());
         $this->log('>> Success.');
