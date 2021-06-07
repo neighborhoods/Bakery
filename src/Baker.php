@@ -134,6 +134,15 @@ class Baker implements BakerInterface
 
     protected function getComposerAuthoritativeClassmap() : array
     {
+        $classmapAuthoritativeConfigValueString = exec(
+            // List all composer options
+            // extract the line with classmap-authoritative
+            // take the value (second word)
+            'composer config --list | grep classmap-authoritative | awk \'{print $2}\''
+        );
+        if ($classmapAuthoritativeConfigValueString !== 'true') {
+            throw new \RuntimeException('Please enable classmap-authoritative option in your composer.json');
+        }
         $composerAuthoritativeClassMap = require __DIR__ . '/../../../../vendor/composer/autoload_classmap.php';
         if (empty($composerAuthoritativeClassMap)) {
             throw new \RuntimeException('Composer authoritative classmap is empty.');
